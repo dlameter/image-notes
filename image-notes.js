@@ -35,33 +35,33 @@ const s = ( p ) => {
 
     p.draw = function() {
         p.background(220);
-        p.translate(x, y);
         p.scale(scale);
+        p.translate(x, y);
         objects.forEach((object) => {object.render(p)});
     };
 
     p.keyPressed = function() {
         if (p.keyCode === p.LEFT_ARROW) {
-            x -= 10;
-        }
-        if (p.keyCode === p.RIGHT_ARROW) {
             x += 10;
         }
+        if (p.keyCode === p.RIGHT_ARROW) {
+            x -= 10;
+        }
         if (p.keyCode === p.UP_ARROW) {
-            y -= 10;
+            y += 10;
         }
         if (p.keyCode === p.DOWN_ARROW) {
-            y += 10;
+            y -= 10;
         }
     }
 
     p.mouseWheel = function(event) {
         p.print(event.delta);
         if (event.delta > 0) {
-            scale *= 2;
+            scale /= 2;
         }
         else {
-            scale /= 2;
+            scale *= 2;
         }
     }
 
