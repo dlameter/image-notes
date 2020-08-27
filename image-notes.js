@@ -1,81 +1,30 @@
-class SceneImage {
-    constructor(image, x, y) {
-        this.img = image;
-        this.x = x;
-        this.y = y;
-    }
+var map;
+var bgImg;
 
-    setImg(image) {
-        if (this.img) {
-            this.img.remove();
-        }
-
-        this.img = image;
+function setBgImg(url, onload) {
+    if (bgImg) {
+        removeBgImg();
     }
-
-    render(p) {
-        if (this.img) {
-            p.image(this.img, this.x, this.y);
-        }
-    }
+    bgImg = createImg(url, onload);
 }
 
-const s = ( p ) => {
-    let objects = [];
-    let x;
-    let y;
-    let scale;
+function removeBgImg() {
+    bgImg.parentNode.removeChild(bgImg);
+    bgImg = undefined;
+}
 
-    p.setup = function() {
-        p.createCanvas(400, 400);
-        x = 0;
-        y = 0;
-        scale = 1;
-    };
+function createImg(url, onload) {
+    var body = document.body;
 
-    p.draw = function() {
-        p.background(220);
-        p.scale(scale);
-        p.translate(x, y);
-        objects.forEach((object) => {object.render(p)});
-    };
+    bgImg = new Image();
+    bgImg.onload = onload;
+    bgImg.src = url;
+    bgImg.style.display = "none";
 
-    p.keyPressed = function() {
-        if (p.keyCode === p.LEFT_ARROW) {
-            x += 10;
-        }
-        if (p.keyCode === p.RIGHT_ARROW) {
-            x -= 10;
-        }
-        if (p.keyCode === p.UP_ARROW) {
-            y += 10;
-        }
-        if (p.keyCode === p.DOWN_ARROW) {
-            y -= 10;
-        }
-    }
+    body.appendChild(bgImg);
+}
 
-    p.mouseWheel = function(event) {
-        p.print(event.delta);
-        if (event.delta > 0) {
-            scale /= 2;
-        }
-        else {
-            scale *= 2;
-        }
-    }
-
-    p.add = function(object) {
-        objects.push(object);
-    };
-};
-
-let myp5 = new p5(s);
-
-var bgImage = new SceneImage(null, 0, 0);
-myp5.add(bgImage);
-
-function fileToDateURL(p, file, callback) {
+function fileToDateURL(file, callback) {
     let reader = new FileReader();
 
     reader.addEventListener("load", function () {
@@ -87,14 +36,32 @@ function fileToDateURL(p, file, callback) {
 
 function fileChanged(event) {
     let file = event.target.files[0];
-    fileToDateURL(myp5, file, (fileData) => {
-        bgImage.setImg(myp5.createImg(fileData, ''));
-        bgImage.img.hide();
+
+    fileToDateURL(file, (fileData) => {
+        setBgImg(fileData, addImageOverlay)
     });
+}
+
+function addImageOverlay() {
+    var img = this;
+    var bounds = createBounds(img);
+
+    L.imageOverlay(img.src, bounds).addTo(map);
+    map.fitBounds(bounds);
+}
+
+function createBounds(img) {
+    return [[0,0], [img.naturalHeight, img.naturalWidth]];
 }
 
 window.onload = (event) => {
     let fileIn = document.getElementById("file-in");
     fileIn.addEventListener('change', (event) => fileChanged(event));
-}
 
+    map = L.map("test-map", {
+        crs: L.CRS.Simple,
+        minZoom: -5,
+        maxZoom: 4,
+        zoomDelta: 0.5,
+    });
+}
