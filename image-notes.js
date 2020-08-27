@@ -54,6 +54,10 @@ function createBounds(img) {
     return [[0,0], [img.naturalHeight, img.naturalWidth]];
 }
 
+function handleClick(mouseEvent) {
+    L.marker(mouseEvent.latlng).addTo(map);
+}
+
 window.onload = (event) => {
     let fileIn = document.getElementById("file-in");
     fileIn.addEventListener('change', (event) => fileChanged(event));
@@ -64,4 +68,6 @@ window.onload = (event) => {
         maxZoom: 4,
         zoomDelta: 0.5,
     });
+
+    map.on("click", handleClick);
 }
