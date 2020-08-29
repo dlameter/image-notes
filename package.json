@@ -1,0 +1,26 @@
+{
+  "name": "image-notes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "image-notes.js",
+  "dependencies": {
+    "@geoman-io/leaflet-geoman-free": "^2.6.0",
+    "file-saver": "^2.0.2",
+    "leaflet": "^1.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dlameter/image-notes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dlameter/image-notes/issues"
+  },
+  "homepage": "https://github.com/dlameter/image-notes#readme"
+}
