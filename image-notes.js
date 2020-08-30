@@ -1,3 +1,4 @@
+var FileSaver = require('./node_modules/file-saver/dist/FileSaver.min.js');
 var map;
 var bgImg;
 
@@ -58,9 +59,16 @@ function handleClick(mouseEvent) {
     L.marker(mouseEvent.latlng).addTo(map);
 }
 
+function saveToJSONToFile(json, name) {
+    var blob = new Blob([JSON.stringify(json)], {type: "text/plain;charset=utf-8"});
+    FileSaver.saveAs(blob, name);
+}
+
 window.onload = (event) => {
     let fileIn = document.getElementById("file-in");
     fileIn.addEventListener('change', (event) => fileChanged(event));
+
+    let downloadData = document.getElementById("download-data");
 
     map = L.map("test-map", {
         crs: L.CRS.Simple,
@@ -69,5 +77,5 @@ window.onload = (event) => {
         zoomDelta: 0.5,
     });
 
-    map.on("click", handleClick);
+    map.pm.addControls({ position: 'topleft' });
 }
