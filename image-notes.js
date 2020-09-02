@@ -68,13 +68,23 @@ window.onload = (event) => {
     let fileIn = document.getElementById("file-in");
     fileIn.addEventListener('change', (event) => fileChanged(event));
 
-    let downloadData = document.getElementById("download-data");
-
     map = L.map("test-map", {
         crs: L.CRS.Simple,
         minZoom: -5,
         maxZoom: 4,
         zoomDelta: 0.5,
+    });
+
+    var layerGroup = L.layerGroup();
+    layerGroup.addTo(map);
+
+    map.on('pm:create', e => {
+        layerGroup.addLayer(e.layer);
+    });
+
+    let downloadData = document.getElementById("download-data");
+    downloadData.addEventListener('click', e => {
+        saveToJSONToFile(layerGroup.toGeoJSON(), 'data.geojson');
     });
 
     map.pm.addControls({ position: 'topleft' });
