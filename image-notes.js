@@ -88,12 +88,12 @@ function swapLayerGroup(newLayerGroup) {
     map.removeLayer(layerGroup);
     layerGroup.clearLayers();
     layerGroup = newLayerGroup;
-    addPopupToLayerGroup(layerGroup);
-    layerGroup.addTo(map);
+    geomanSetupLayerGroup(map, layerGroup);
 }
 
-function geomanSetLayerGroup(map, layerGroup){
+function geomanSetupLayerGroup(map, layerGroup){
     map.on('pm:create', e => {
+        initLayerFeature(e.layer);
         layerGroup.addLayer(e.layer);
     });
 
@@ -105,10 +105,27 @@ function geomanSetLayerGroup(map, layerGroup){
     map.on('pm:remove', e => {
         layerGroup.removeLayer(e.layer);
     });
+
+    addPopupToLayerGroup(layerGroup);
+    layerGroup.addTo(map);
 }
 
 function addPopupToLayerGroup(layerGroup) {
     layerGroup.bindPopup('Test');
+}
+
+function setLayerProperty(layer, property, value) {
+    layer.feature.properties[property] = value;
+}
+
+function getLayerProperty(layer, property) {
+    return layer.feature.properties[property];
+}
+
+function initLayerFeature(layer) {
+    let feature = layer.feature = layer.feature || {};
+    feature.type = feature.type || "Feature";
+    feature.properties = feature.properties || {};
 }
 
 window.onload = (event) => {
@@ -123,10 +140,7 @@ window.onload = (event) => {
     });
 
     layerGroup = L.geoJSON();
-    addPopupToLayerGroup(layerGroup);
-    layerGroup.addTo(map);
-
-    geomanSetLayerGroup(map, layerGroup);
+    geomanSetupLayerGroup(map, layerGroup);
 
     let downloadData = document.getElementById("download-data");
     downloadData.addEventListener('click', e => {
