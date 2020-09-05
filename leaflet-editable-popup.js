@@ -18,7 +18,6 @@ let EditablePopup = L.Popup.extend({
             L.DomEvent.on(editButton, 'click', this._onEdit, this);
 
             this.update();
-            console.log('setup complete');
         }
     },
 
@@ -30,7 +29,6 @@ let EditablePopup = L.Popup.extend({
         this.update();
 
         L.DomEvent.stop(event);
-        console.log('onEdit complete');
     },
 
     _createEditWrapper: function() {
