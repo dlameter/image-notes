@@ -1,17 +1,45 @@
-L.Popup.mergeOptions({
-    editable: false,
-});
+let EditablePopup = L.Popup.extend({
+    options: {
+        editable: true,
+    },
 
-let PopupMixin = {
     _editablePopupCSSPrefix: 'leaflet-popup',
 
-    _setupEditable: function() {
-        if (this.option.editable) {
-            let editButton = this._editButton = L.DomUtil.create('a', this._editablePopupCSSPrefix + '-edit-button', this._wrapper);
+    _initLayout: function () {
+        var prefix = 'leaflet-popup',
+            container = this._container = L.DomUtil.create('div',
+                prefix + ' ' + (this.options.className || '') +
+                ' leaflet-zoom-animated');
+
+        var wrapper = this._wrapper = L.DomUtil.create('div', prefix + '-content-wrapper', container);
+        this._contentNode = L.DomUtil.create('div', prefix + '-content', wrapper);
+
+        L.DomEvent.disableClickPropagation(wrapper);
+        L.DomEvent.disableScrollPropagation(this._contentNode);
+        L.DomEvent.on(wrapper, 'contextmenu', L.DomEvent.stopPropagation);
+
+        this._tipContainer = L.DomUtil.create('div', prefix + '-tip-container', container);
+        this._tip = L.DomUtil.create('div', prefix + '-tip', this._tipContainer);
+
+        if (this.options.closeButton) {
+            var closeButton = this._closeButton = L.DomUtil.create('a', prefix + '-close-button', container);
+            closeButton.href = '#close';
+            closeButton.innerHTML = '&#215;';
+
+            L.DomEvent.on(closeButton, 'click', this._onCloseButtonClick, this);
+        }
+    //_setupEditable: function() {
+        if (this.options.editable) {
+            let actionButtons = this._userActionButtons = L.DomUtil.create('div', this._editablePopupCSSPrefix + '-useraction-buttons', this._wrapper);
+            console.log()
+            let editButton = this._editButton = L.DomUtil.create('a', this._editablePopupCSSPrefix + '-edit-button', this._userActionButtons);
             editButton.innerHTML = 'Edit';
             editButton.href = '#edit';
 
             L.DomEvent.on(editButton, 'click', this._onEdit, this);
+
+            this.update();
+            console.log('setup complete');
         }
     },
 
@@ -22,6 +50,7 @@ let PopupMixin = {
         this._createEditWrapper();
 
         L.DomEvent.stop(event);
+        console.log('onEdit complete');
     },
 
     _createEditWrapper: function() {
@@ -98,7 +127,9 @@ let PopupMixin = {
         this._contentNode.style.display = 'block';
         this._userActionButtons.style.display = 'flex';
     },
-};
+});
 
-L.Popup.include(PopupMixin);
-L.Popup.addInitHook('_setupEditable');
+L.EditablePopup = EditablePopup;
+L.editablePopup = function(id, options) {
+    return new L.EditablePopup(id, options);
+};

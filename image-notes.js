@@ -94,6 +94,7 @@ function swapLayerGroup(newLayerGroup) {
 function geomanSetupLayerGroup(map, layerGroup){
     map.on('pm:create', e => {
         initLayerFeature(e.layer);
+        e.layer.bindPopup(L.editablePopup());
         layerGroup.addLayer(e.layer);
     });
 
@@ -106,7 +107,7 @@ function geomanSetupLayerGroup(map, layerGroup){
         layerGroup.removeLayer(e.layer);
     });
 
-    addPopupToLayerGroup(layerGroup);
+    //addPopupToLayerGroup(layerGroup);
     layerGroup.addTo(map);
 }
 
