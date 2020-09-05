@@ -2,6 +2,7 @@ var FileSaver = require('./node_modules/file-saver/dist/FileSaver.min.js');
 var map;
 var layerGroup;
 var bgImg;
+var leafletImage;
 
 function setBgImg(url, onload) {
     if (bgImg) {
@@ -48,7 +49,12 @@ function addImageOverlay() {
     var img = this;
     var bounds = createBounds(img);
 
-    L.imageOverlay(img.src, bounds).addTo(map);
+    if (leafletImage) {
+        leafletImage.remove();
+    }
+
+    leafletImage = L.imageOverlay(img.src, bounds);
+    leafletImage.addTo(map);
     map.fitBounds(bounds);
 }
 
