@@ -27,6 +27,7 @@ let EditablePopup = L.Popup.extend({
 
         this._hideContentNode();
         this._createEditWrapper();
+        this.update();
 
         L.DomEvent.stop(event);
         console.log('onEdit complete');
@@ -84,7 +85,7 @@ let EditablePopup = L.Popup.extend({
             this._inputRuler.innerHTML = this._inputField.innerHTML;
 
             if (this._inputRuler.offsetWidth + 20 > this._inputField.clientWidth) {
-                this._inputField.style.width = ruler.offsetWidth + 10 + 'px';
+                this._inputField.style.width = this._inputRuler.offsetWidth + 10 + 'px';
                 this.update();
             }
         }
