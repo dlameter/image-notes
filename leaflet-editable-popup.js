@@ -6,29 +6,8 @@ let EditablePopup = L.Popup.extend({
     _editablePopupCSSPrefix: 'leaflet-popup',
 
     _initLayout: function () {
-        var prefix = 'leaflet-popup',
-            container = this._container = L.DomUtil.create('div',
-                prefix + ' ' + (this.options.className || '') +
-                ' leaflet-zoom-animated');
+        L.Popup.prototype._initLayout.call(this);
 
-        var wrapper = this._wrapper = L.DomUtil.create('div', prefix + '-content-wrapper', container);
-        this._contentNode = L.DomUtil.create('div', prefix + '-content', wrapper);
-
-        L.DomEvent.disableClickPropagation(wrapper);
-        L.DomEvent.disableScrollPropagation(this._contentNode);
-        L.DomEvent.on(wrapper, 'contextmenu', L.DomEvent.stopPropagation);
-
-        this._tipContainer = L.DomUtil.create('div', prefix + '-tip-container', container);
-        this._tip = L.DomUtil.create('div', prefix + '-tip', this._tipContainer);
-
-        if (this.options.closeButton) {
-            var closeButton = this._closeButton = L.DomUtil.create('a', prefix + '-close-button', container);
-            closeButton.href = '#close';
-            closeButton.innerHTML = '&#215;';
-
-            L.DomEvent.on(closeButton, 'click', this._onCloseButtonClick, this);
-        }
-    //_setupEditable: function() {
         if (this.options.editable) {
             let actionButtons = this._userActionButtons = L.DomUtil.create('div', this._editablePopupCSSPrefix + '-useraction-buttons', this._wrapper);
             console.log()
@@ -54,34 +33,27 @@ let EditablePopup = L.Popup.extend({
     },
 
     _createEditWrapper: function() {
-        // Create edit wrapper
         let editWrapper = this._editWrapper = L.DomUtil.create('div', this._editablePopupCSSPrefix + '-edit-wrapper', this._wrapper);
 
-        // create input ruler
         this._inputRuler = L.DomUtil.create('div', this._editablePopupCSSPrefix + '-input-ruler', this._editWrapper);
 
-        // create input box
         let inputField = this._inputField = L.DomUtil.create('div', this._editablePopupCSSPrefix + '-input-field', this._editWrapper);
         inputField.setAttribute('contenteditable', 'true');
         inputField.innerHTML = this.getContent();
         inputField.style.width = this._inputFieldWidth + 'px';
         inputField.addEventListener('keydown', this._keyDownHandler.bind(this), false);
 
-        // create button wrapper
         this._createEditButtonWrapper();
     },
 
     _createEditButtonWrapper: function() {
-        // create button wrapper
         let buttonWrapper = this._editButtonWrapper = L.DomUtil.create('div', this._editablePopupCSSPrefix + '-input-wrapper', this._editWrapper);
 
-        // create cancel button
         let cancelButton = this._cancelButton = L.DomUtil.create('a', this._editablePopupCSSPrefix + '-input-cancel-button', this._editButtonWrapper);
         cancelButton.href = '#cancel';
         cancelButton.innerHTML = 'Cancel';
         L.DomEvent.on(cancelButton, 'click', this._onCancel, this);
 
-        // create save button
         let saveButton = this._saveButton = L.DomUtil.create('a', this._editablePopupCSSPrefix + '-input-save-button', this._editButtonWrapper);
         saveButton.href = '#save';
         saveButton.innerHTML = 'Save';
@@ -129,6 +101,7 @@ let EditablePopup = L.Popup.extend({
     },
 });
 
+// Add new class to L
 L.EditablePopup = EditablePopup;
 L.editablePopup = function(id, options) {
     return new L.EditablePopup(id, options);
