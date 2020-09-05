@@ -2,7 +2,7 @@
 .leaflet-popup-input-wrapper{
     display: flex;
     justify-content: space-between;
-    padding: 13px 19px 10px 19px;
+    margin: 13px 19px 10px 19px;
 }
 
 a.leaflet-popup-remove-button,
