@@ -75,9 +75,26 @@ function loadJSONFromFile(event) {
     let file = event.target.files[0];
 
     fileToJSONObject(file, (jsonObject) => {
-        newLayerGroup = L.geoJSON(jsonObject);
+        newLayerGroup = L.geoJSON(jsonObject, {
+            onEachFeature: handleLoadingFeatures,
+        });
         swapLayerGroup(newLayerGroup);
     });
+}
+
+function handleLoadingFeatures(feature, layer) {
+    bindConfiguredPopup(layer);
+}
+
+function bindConfiguredPopup(layer) {
+    var popup = L.editablePopup()
+        .on('save', (e) => handlePopupSave(e, layer));
+
+    if (layer.feature.properties['popupText']) {
+        popup.setContent(layer.feature.properties['popupText']);
+    }
+
+    layer.bindPopup(popup);
 }
 
 function fileToJSONObject(file, callback) {
@@ -100,7 +117,7 @@ function swapLayerGroup(newLayerGroup) {
 function geomanSetupLayerGroup(map, layerGroup){
     map.on('pm:create', e => {
         initLayerFeature(e.layer);
-        e.layer.bindPopup(L.editablePopup());
+        bindConfiguredPopup(e.layer);
         layerGroup.addLayer(e.layer);
     });
 
@@ -115,6 +132,10 @@ function geomanSetupLayerGroup(map, layerGroup){
 
     //addPopupToLayerGroup(layerGroup);
     layerGroup.addTo(map);
+}
+
+function handlePopupSave(e, layer) {
+    setLayerProperty(layer, 'popupText', e.popup.getContent());
 }
 
 function addPopupToLayerGroup(layerGroup) {
