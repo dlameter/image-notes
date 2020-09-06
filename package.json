@@ -6,6 +6,7 @@
   "dependencies": {
     "@geoman-io/leaflet-geoman-free": "^2.6.0",
     "file-saver": "^2.0.2",
+    "he": "^1.2.0",
     "leaflet": "^1.6.0"
   },
   "devDependencies": {},

@@ -38,7 +38,7 @@ let EditablePopup = L.Popup.extend({
 
         let inputField = this._inputField = L.DomUtil.create('div', this._editablePopupCSSPrefix + '-input-field', this._editWrapper);
         inputField.setAttribute('contenteditable', 'true');
-        inputField.innerHTML = this.getContent();
+        inputField.innerHTML = he.encode(this.getContent() || '');
         inputField.style.width = this._inputFieldWidth + 'px';
         inputField.addEventListener('keydown', this._keyDownHandler.bind(this), false);
 
@@ -68,7 +68,7 @@ let EditablePopup = L.Popup.extend({
     },
 
     _onSave: function(event) {
-        this.setContent(this._inputField.innerHTML);
+        this.setContent(he.decode(this._inputField.innerHTML));
 
         L.DomUtil.remove(this._editWrapper);
         this._showContentNode();
