@@ -29,6 +29,8 @@ let EditablePopup = L.Popup.extend({
         this.update();
 
         L.DomEvent.stop(event);
+
+        this.fire('edit', { popup: this });
     },
 
     _createEditWrapper: function() {
@@ -65,6 +67,8 @@ let EditablePopup = L.Popup.extend({
 
         this.update();
         L.DomEvent.stop(event);
+
+        this.fire('cancel', { popup: this });
     },
 
     _onSave: function(event) {
@@ -75,6 +79,8 @@ let EditablePopup = L.Popup.extend({
 
         this.update();
         L.DomEvent.stop(event);
+
+        this.fire('save', { popup: this });
     },
 
     _keyDownHandler: function(event) {
