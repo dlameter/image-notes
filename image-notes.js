@@ -167,6 +167,8 @@ window.onload = (event) => {
         zoomDelta: 0.5,
     });
 
+    L.control.imageNotes({ postion: 'topright' }).addTo(map);
+
     layerGroup = L.geoJSON();
     geomanSetupLayerGroup(map, layerGroup);
 
