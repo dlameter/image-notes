@@ -26,7 +26,6 @@ L.Control.ImageNotes = L.Control.extend({
 
     _clearData: function(e) {
         this._map.eachLayer(this._removeLayerFromMap.bind(this));
-        console.log(this);
     },
 
     _removeLayerFromMap: function(layer) {
