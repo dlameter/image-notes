@@ -182,10 +182,5 @@ window.onload = (event) => {
         loadJSONFromFile(e);
     });
 
-    let clearData = document.getElementById('clear-data');
-    clearData.addEventListener('click', e => {
-        layerGroup.clearLayers();
-    });
-
     map.pm.addControls({ position: 'topleft' });
 }
