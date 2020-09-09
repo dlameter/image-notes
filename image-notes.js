@@ -178,11 +178,6 @@ window.onload = (event) => {
         saveJSON: saveJSONToFile,
     }).addTo(map);
 
-    let downloadData = document.getElementById("download-data");
-    downloadData.addEventListener('click', e => {
-        saveToJSONToFile(layerGroup.toGeoJSON(), 'data.geojson');
-    });
-
     let uploadData = document.getElementById("upload-data");
     uploadData.addEventListener('change', e => {
         loadJSONFromFile(e);
