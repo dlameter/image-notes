@@ -66,7 +66,7 @@ function handleClick(mouseEvent) {
     L.marker(mouseEvent.latlng).addTo(map);
 }
 
-function saveToJSONToFile(json, name) {
+function saveJSONToFile(json, name) {
     var blob = new Blob([JSON.stringify(json)], {type: "text/plain;charset=utf-8"});
     FileSaver.saveAs(blob, name);
 }
@@ -167,10 +167,16 @@ window.onload = (event) => {
         zoomDelta: 0.5,
     });
 
-    L.control.imageNotes({ postion: 'topright' }).addTo(map);
-
     layerGroup = L.geoJSON();
     geomanSetupLayerGroup(map, layerGroup);
+
+    L.control.imageNotes({ 
+        postion: 'topright',
+        mapToJSON: (map) => {
+            return layerGroup.toGeoJSON();
+        },
+        saveJSON: saveJSONToFile,
+    }).addTo(map);
 
     let downloadData = document.getElementById("download-data");
     downloadData.addEventListener('click', e => {
