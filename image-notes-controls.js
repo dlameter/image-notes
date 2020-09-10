@@ -1,5 +1,6 @@
 L.Control.ImageNotes = L.Control.extend({
     options: {
+        prefix: 'image-notes',
         filename: 'data.geojson',
         mapToJSON: function (map) {
             let layerGroup = L.geoJSON();
@@ -22,38 +23,31 @@ L.Control.ImageNotes = L.Control.extend({
     },
 
     onAdd: function(map) {
-        let prefix = 'image-notes';
+        let prefix = this.options.prefix;
+
         let container = L.DomUtil.create('div', prefix + '-container');
         let clearButton = this._createButton('Clear', 'clear-button', prefix + '-clear-button', container, this._clearData);
         let saveButton = this._createButton('Save', 'save-button', prefix + '-save-button', container, this._saveData);
-
-        let loadImage = L.DomUtil.create('div', prefix + '-input-wrapper', container);
-        let loadImageInput = this._createFileInput('load-image', '.png, .jpeg, .jpg', prefix + '-load', loadImage);
-        loadImageInput.style.display = 'none';
-        L.DomEvent.on(loadImageInput, 'click', (e) => {
-            loadImageInput.value = '';
-        }, this);
-        L.DomEvent.on(loadImageInput, 'change', (e) => {
-            if (loadImageInput.value) {
-                this.options.loadImageFile(e.target.files);
-            }
-        }, this);
-        let loadImageButton = this._createButton('Load Image', 'load-image-button', prefix + '-load-button', loadImage, (e) => loadImageInput.click());
-
-        let loadData = L.DomUtil.create('div', prefix + '-input-wrapper', container);
-        let loadDataInput = this._createFileInput('load-data', '.json, .geojson', prefix + '-load', loadData);
-        loadDataInput.style.display = 'none';
-        L.DomEvent.on(loadDataInput, 'click', (e) => {
-            loadDataInput.value = '';
-        }, this);
-        L.DomEvent.on(loadDataInput, 'change', (e) => {
-            if (loadDataInput.value) {
-                this.options.loadDataFile(e.target.files);
-            }
-        }, this);
-        let loadDataButton = this._createButton('Load Data', 'load-data-button', prefix + '-load-button', loadData, (e) => loadDataInput.click());
+        let loadImage = this._createFileInput('Load Image', 'load-image', '.png, .jpeg, .jpg', container, this.options.loadImageFile);
+        let loadData = this._createFileInput('Data Image', 'load-data', '.json, .geojson', container, this.options.loadDataFile);
 
         return container;
+    },
+
+    _createFileInput: function(text, name, accept, container, loadFiles) {
+        let prefix = this.options.prefix;
+
+        let fileDiv = L.DomUtil.create('div', prefix + '-input-wrapper', container);
+
+        let fileInput = this._createFileInputElement(name, accept, prefix + '-input', fileDiv, (e) => {
+            fileInput.value = '';
+        }, (e) => {
+            if (fileInput.value) {
+                loadFiles(e.target.files);
+            }
+        });
+        
+        let fileButton = this._createButton(text, name + '-button', prefix + '-button', fileDiv, (e) => fileInput.click());
     },
 
     _createButton: function(html, title, className, container, func) {
@@ -70,14 +64,16 @@ L.Control.ImageNotes = L.Control.extend({
         return button;
     },
 
-    _createFileInput: function(name, accept, className, container, func) {
+    _createFileInputElement: function(name, accept, className, container, clickFunc, changeFunc) {
         let input = L.DomUtil.create('input', className, container);
         input.accept = accept;
         input.id = name;
         input.name = name;
+        input.style.display = 'none';
         input.type = 'file';
 
-        //L.DomEvent.on(input, 'click', func, this);
+        L.DomEvent.on(input, 'click', clickFunc, this);
+        L.DomEvent.on(input, 'change', changeFunc, this);
 
         return input;
     },
