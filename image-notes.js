@@ -176,9 +176,6 @@ function initLayerFeature(layer) {
 }
 
 window.onload = (event) => {
-    let fileIn = document.getElementById("file-in");
-    fileIn.addEventListener('change', (event) => fileChanged(event));
-
     map = L.map("test-map", {
         crs: L.CRS.Simple,
         minZoom: -5,
@@ -198,11 +195,6 @@ window.onload = (event) => {
         loadImageFile: loadImageFile,
         loadDataFile: loadJSONFile,
     }).addTo(map);
-
-    let uploadData = document.getElementById("upload-data");
-    uploadData.addEventListener('change', e => {
-        loadJSONFromFile(e);
-    });
 
     map.pm.addControls({ position: 'topleft' });
 }
