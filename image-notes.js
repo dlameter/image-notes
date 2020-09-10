@@ -37,14 +37,6 @@ function fileToDateURL(file, callback) {
     reader.readAsDataURL(file);
 }
 
-function fileChanged(event) {
-    let file = event.target.files[0];
-
-    fileToDateURL(file, (fileData) => {
-        setBgImg(fileData, addImageOverlay)
-    });
-}
-
 function loadImageFile(files) {
     let file = files[0];
 
@@ -77,17 +69,6 @@ function handleClick(mouseEvent) {
 function saveJSONToFile(json, name) {
     var blob = new Blob([JSON.stringify(json)], {type: "text/plain;charset=utf-8"});
     FileSaver.saveAs(blob, name);
-}
-
-function loadJSONFromFile(event) {
-    let file = event.target.files[0];
-
-    fileToJSONObject(file, (jsonObject) => {
-        newLayerGroup = L.geoJSON(jsonObject, {
-            onEachFeature: handleLoadingFeatures,
-        });
-        swapLayerGroup(newLayerGroup);
-    });
 }
 
 function loadJSONFile(files) {
