@@ -1,3 +1,4 @@
+
 .image-notes-container .image-notes-button-wrapper:first-child .image-notes-icon-wrapper,
 .image-notes-container .image-notes-button-wrapper:first-child {
     border-radius: 4px 4px 0 0 !important;
@@ -13,7 +14,6 @@
     border-bottom: 1px solid #ccc;
 }
 
-/* Icons found at https://www.iconfinder.com/iconsets/app-custom-ui-1 */
 .image-notes-icon {
     width: 100%;
     height: 100%;
@@ -32,6 +32,7 @@
     border-radius: 0 0 0 0 !important;
 }
 
+/* Icons found at https://www.iconfinder.com/iconsets/app-custom-ui-1 */
 .image-notes-upload-json-icon {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACL0lEQVR4Xu2bvS5FQRDHf9dnQSVRCj2iFOIFaBRIVIIHEJVEgYiESuIJKBRIVBLeQNDiBXxUCp0Q39lkbyJy783u3D3XXHdOPbP/nf+Z/e+cObs5avzJ1Xj8lENAO9APtP4xic/AGfAgmYeEAOezCKwATRLQDHzegFVgHfiKGV9CwAywHQNSQdtZYCcGT0LAFdADvPpMuI0BzMC2E9gAGoFroDcGQ0LAO1APHAGjMWAZ2h4DI8Cnn1swlISA/Bo7ACaDkbI1PATGPERUTFHGHsAI8ERYBtgSMA0wEbRdoMTu5gqUgUS73ylwV2Isldugy469RARMAC7IYo8RoLEQ6vCfyymS4By4r7YMSBF46Bgql0Do5FPYGQEaNSDFmw0dwzLAMsD6AfoaIkPAfOgi/mE3LvBRqQHSUljSpTICTARNBPWJoEDLxC4qNUAcjcDRCDARNBE0EVT3b1BaCRbSQGuKVmNXeBCYE2xphVy2ANcYraq2eKLYg4axOsDqAKsDrA5QVwcEqVciIxNBjSIoPR+wL8gKlRkgLYWtKfpfMkB6PqDUSRArhYswoFIDBJksdjECNG6D4tcpcLQMsAywr8HKfQ1+AHXKrsycAMOAm1tDjIZIyk53ManbX5paBm5iADOw7QLWfOCXQF8MhoSA6diraTETKtN2CtiNGUNCgPNZ8BcVm2PAMrR9AZaAzUpcnMzH0ebPArdkGFjI0E/ABfAYYvzbRpIBEhy1PjVPwDc8lc9BEnSvagAAAABJRU5ErkJggg==);
 }
