@@ -130,16 +130,11 @@ function geomanSetupLayerGroup(map, layerGroup){
         layerGroup.removeLayer(e.layer);
     });
 
-    //addPopupToLayerGroup(layerGroup);
     layerGroup.addTo(map);
 }
 
 function handlePopupSave(e, layer) {
     setLayerProperty(layer, 'popupText', e.popup.getContent());
-}
-
-function addPopupToLayerGroup(layerGroup) {
-    layerGroup.bindPopup('Test');
 }
 
 function setLayerProperty(layer, property, value) {
