@@ -1,3 +1,7 @@
+body {
+    margin: 0;
+    height: 100vh;
+}
 
 .image-notes-container .image-notes-button-wrapper:first-child .image-notes-icon-wrapper,
 .image-notes-container .image-notes-button-wrapper:first-child {
