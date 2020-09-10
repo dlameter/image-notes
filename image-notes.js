@@ -45,6 +45,14 @@ function fileChanged(event) {
     });
 }
 
+function loadImageFile(files) {
+    let file = files[0];
+
+    fileToDateURL(file, (fileData) => {
+        setBgImg(fileData, addImageOverlay)
+    });
+}
+
 function addImageOverlay() {
     var img = this;
     var bounds = createBounds(img);
@@ -73,6 +81,17 @@ function saveJSONToFile(json, name) {
 
 function loadJSONFromFile(event) {
     let file = event.target.files[0];
+
+    fileToJSONObject(file, (jsonObject) => {
+        newLayerGroup = L.geoJSON(jsonObject, {
+            onEachFeature: handleLoadingFeatures,
+        });
+        swapLayerGroup(newLayerGroup);
+    });
+}
+
+function loadJSONFile(files) {
+    let file = files[0];
 
     fileToJSONObject(file, (jsonObject) => {
         newLayerGroup = L.geoJSON(jsonObject, {
@@ -176,6 +195,8 @@ window.onload = (event) => {
             return layerGroup.toGeoJSON();
         },
         saveJSON: saveJSONToFile,
+        loadImageFile: loadImageFile,
+        loadDataFile: loadJSONFile,
     }).addTo(map);
 
     let uploadData = document.getElementById("upload-data");
