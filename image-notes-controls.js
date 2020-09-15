@@ -27,9 +27,9 @@ L.Control.ImageNotes = L.Control.extend({
 
         let container = L.DomUtil.create('div', 'leaflet-bar leaflet-control ' + prefix + '-container');
 
-        let saveButton = this._createButton('Save', prefix + '-save-button', prefix + '-save-icon', container, this._saveData);
         let loadImage = this._createFileInput('Load Image', '.png, .jpeg, .jpg', prefix + '-upload-image-icon', container, this.options.loadImageFile);
         let loadData = this._createFileInput('Load Data', '.json, .geojson', prefix + '-upload-json-icon', container, this.options.loadDataFile);
+        let saveButton = this._createButton('Save', prefix + '-save-button', prefix + '-save-icon', container, this._saveData);
         let clearButton = this._createButton('Clear', prefix + '-clear-button', prefix + '-clear-icon', container, this._clearData);
 
         return container;
