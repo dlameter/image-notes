@@ -43,6 +43,7 @@ let EditablePopup = L.Popup.extend({
         inputField.innerHTML = he.encode(this.getContent() || '');
         inputField.style.width = this._inputFieldWidth + 'px';
         inputField.addEventListener('keydown', this._keyDownHandler.bind(this), false);
+        inputField.focus();
 
         this._createEditButtonWrapper();
     },
