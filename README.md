@@ -11,4 +11,4 @@ The main functionality added is the loading and saving of data. Once the site is
 * The download icon allows you to download created geojson notes to file so that you can persist your notes.
 * The trash icon allows you to clear the application to work on a seperate image or data without needing to refresh the webpage.
 
-The other functionality is on the top left side of the screen and will select tools you can use to markup your images, edit existing image markup, and erase markup. There are also zoom buttons at the very top.
+Tools to markup your images, edit existing image markup, and erase markup are found on the left side of the screen below the zoom buttons. You can also zoom using the mouse wheel, and you can pan by clicking and dragging while holding the left mouse button.
